@@ -1,8 +1,27 @@
 <html>
     <title></title>
-   <body>
-   <p>hisadaasda</p>
+    <style>
+        .blur {
+            filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+            -webkit-filter: url(#blur-filter);
+            filter: url(#blur-filter);
+            -webkit-filter: blur(3px);
+            filter: blur(3px);
+        }
+        .blur-svg {
+            display: none;
+        }
+        </style>
+   <body ng-app="myApp" ng-controller="myCtrl">
+       <div class   ="container">
+           <canvas id="transprentBlur" width="500" height="500" style="border:1px solid black"></canvas>
+       </div>
+       <button ng-click="prepareFile()">File</button>
    </body>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.6/angular.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+   <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.js"></script>
    <script src="asset/js/index.js"></script>
    <script src="asset/css/bootstrap.css"></script>
 </html>

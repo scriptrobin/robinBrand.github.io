@@ -1,5 +1,5 @@
 var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope) {
+app.controller('myCtrl', function($scope, $q) {
 
   window.canvas = new fabric.Canvas('transprentBlur');
   var rect = new fabric.Rect({
@@ -30,4 +30,44 @@ app.controller('myCtrl', function($scope) {
     a.download = "test.png";
     a.click();
   }
+
+  $scope.prepareZip = function() {
+    var dataURL = canvas.toDataURL();
+    var myBlob = dataURLtoFile(dataURL, 'image.jpeg');
+    var zip = new JSZip();
+    zip.file("Hello.jpeg", myBlob);
+    zip.generateAsync({type:"blob"}).then(function (blob) {
+      saveAs(blob, "hello.zip");
+    });
+  }
+  var mainZip = new JSZip();
+  $scope.prepareMultipleFiles = function() {
+    var prepareFile = function() {
+      var deffered = $q.defer();
+      function __loadZip() {
+        if(i == 5) {
+          deffered.resolve(true);
+          return deffered.promise
+        } 
+        var singleZip = new JSZip();
+        var dataURL = canvas.toDataURL();
+        var myBlob = dataURLtoFile(dataURL, 'image.jpeg');
+        singleZip.file("hello'"+i+"'.png", myBlob);
+        singleZip.generateAsync({type: "blob"}).then(function(content) {
+          mainZip.file("hello_'"+i+"'.zip", content)
+          // saveAs(content, 'main.zip'); 
+          i++;
+          __loadZip();
+        });
+      }
+      __loadZip();
+      return deffered.promise;
+    }
+    var i = 0;
+    prepareFile().then(function() {
+      mainZip.generateAsync({type: 'blob'}).then(function(content) {
+        saveAs(content, 'main.zip');
+     });
+    });
+  };
 });

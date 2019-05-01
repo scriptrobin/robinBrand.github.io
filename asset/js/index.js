@@ -55,7 +55,7 @@ app.controller('myCtrl', function($scope, $q) {
         singleZip.file("hello'"+i+"'.png", myBlob);
         singleZip.generateAsync({type: "blob"}).then(function(content) {
           mainZip.file("hello_'"+i+"'.zip", content)
-          // saveAs(content, 'main.zip');
+          // saveAs(content, 'main.zip'); 
           i++;
           __loadZip();
         });

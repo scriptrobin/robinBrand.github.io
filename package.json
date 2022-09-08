@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/robinProject/robinBrand.github.io#readme",
   "dependencies": {
-    "jszip": "^3.2.1"
+    "jszip": "^3.7.0"
   }
 }
